@@ -20,18 +20,72 @@
     <script src="./app.js" defer></script>
 </head>
 <body>
-        <!-- App Outer Container -->
-        <div id="app_outer_container">
-        
+    <!-- App Outer Container -->
+    <div id="app_outer_container">
+    
+        <!-- App Inner Container -->
+        <div id="app_inner_container">
+            
+            <!-- App Container -->
+            <div id="app_container">
 
-            <!-- App Inner Container -->
-            <div id="app_inner_container">
-                
-                <!-- App Container -->
-                <div id="app_container">
+                <!-- Calculator Container-->
+                <div id="calculator_container">
+
+                    <!-- Screen -->
+                    <div id="calculator_screen">
+
+                        <!-- Result Heading -->
+                        <p id="result_heading"><!-- Managed by app.js--></p>
+
+                        <!-- Result -->
+                        <p id="result"><!-- Managed by app.js--></p>
+
+                    </div>
+
+
+                    <!-- Controller -->
+                    <div id="calculator_controller">
+                        <div class="row">
+                            <button id="clear_button" class="btn small-text">CLEAR</button>
+                            <button id="delete_button" class="btn small-text">DELETE</button>
+                        </div>
+                        <div class="row">
+                            <button id="7_button" class="btn">7</button>
+                            <button id="8_button" class="btn">8</button>
+                            <button id="9_button" class="btn">9</button>
+                            <button id="division_button" class="btn">÷</button>
+                        </div>
+                        <div class="row">
+                            <button id="4_button" class="btn">4</button>
+                            <button id="5_button" class="btn">5</button>
+                            <button id="6_button" class="btn">6</button>
+                            <button id="multiplication_button" class="btn">x</button>
+                        </div>
+                        <div class="row">
+                            <button id="1_button" class="btn">1</button>
+                            <button id="2_button" class="btn">2</button>
+                            <button id="3_button" class="btn">3</button>
+                            <button id="subtraction_button" class="btn">-</button>
+                        </div>
+                        <div class="row">
+                            <button id="dot_button" class="btn">.</button>
+                            <button id="0_button" class="btn">0</button>
+                            <button id="equals_button" class="btn">=</button>
+                            <button id="addition_button" class="btn">+</button>
+                        </div>
+                    </div>
 
                 </div>
+
             </div>
+
         </div>
+        
+
+        <!-- Error Toastr-->
+        <div id="error_toastr" class="hidden"><!-- Managed by app.js--></div>
+        
+    </div>
 </body>
 </html>

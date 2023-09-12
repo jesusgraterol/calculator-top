@@ -11,10 +11,7 @@
  *************/
  *, *::before, *::after { box-sizing: border-box; border: none; background-repeat: no-repeat; }
  html { font-family: Verdana, Geneva, Tahoma, sans-serif; word-break: break-word; color: #312e2e}
- body { margin: 0; padding:0; background-color: #fafafa;width: 100%;height:100% }
-
-
-
+ body { margin: 0; padding:0; background-color: #fafafa; }
 
 
 
@@ -23,6 +20,54 @@
  /**********
   * BUTTON *
   **********/
+.btn {
+    background-color: inherit;
+    color: var(--primary-color);
+    padding: 10px 20px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size:17px;
+    border-radius: 5px;
+    width: 100%;
+    font-weight: bold;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+}
+.btn:hover, .btn.clicked {
+    background-color: var(--primary-color);
+    color:white;
+    cursor: pointer;
+    outline: none;
+}
+.btn:focus {
+    outline: none;
+}
+
+
+.btn.small-text { font-size: 15px }
+
+
+
+
+
+
+
+/**********
+ * TOASTR *
+ **********/
+
+ #error_toastr {
+    position: fixed;
+    background-color: #870914;
+    color:white;
+    padding:15px;
+    width: 230px;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    bottom: 30px;
+    left: calc(50% - 115px);
+    cursor: pointer;
+ }
+ #error_toastr.hidden { display: none }
 
 
 
@@ -31,16 +76,14 @@
 
 
 
-
-
- /******************
-  * APP CONTAINERS *
-  ******************/
+/******************
+ * APP CONTAINERS *
+ ******************/
 
 
 /* Outer Container */
 #app_outer_container {
-    padding:30px;
+    padding:100px 30px 0 30px;
 }
 
 
@@ -55,7 +98,7 @@
 
 /* Container */
 #app_container {
-    max-width: 70%;
+    max-width: 350px;
     display: flex;
     justify-content: center;
     flex: 1;
@@ -69,7 +112,58 @@
 
 
 
+/************************
+ * CALCULATOR CONTAINER *
+ ************************/
+#calculator_container {
+    background-color: white;
+    box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2), 0 6px 20px 0 rgba(0, 0, 0, 0.19);
+    border-radius: 3px;
+    padding:25px;
+    flex:1;
+}
 
+
+
+/* Screen */
+#calculator_container #calculator_screen {
+    border-radius: 5px;
+    background-color: #fffcfc;
+    box-shadow: 0 2px 4px 0 rgba(0, 0, 0, 0.2), 0 3px 10px 0 rgba(0, 0, 0, 0.19);
+    padding: 15px 15px 15px 15px;
+}
+
+#calculator_container #calculator_screen p { 
+    margin: 0;
+    text-align: right;
+}
+
+#calculator_container #calculator_screen #result_heading {
+    min-height: 23px;
+    font-size: 20px;
+    color: #746c6c
+}
+
+#calculator_container #calculator_screen #result {
+    font-size: 37px;
+    font-weight: bold;
+    margin-top: 7px;
+}
+
+
+
+/* Controller */
+#calculator_container #calculator_controller {
+    margin-top: 35px;
+}
+
+
+#calculator_container #calculator_controller .row {
+    display: flex;
+    justify-content: center;
+    gap: 30px;
+    margin-top: 25px;
+}
 
 
 
@@ -88,11 +182,6 @@
  * SCREEN: 1281px to higher resolution desktops
  */
 @media (min-width: 1281px) {
-    /* Container */
-    #app_container {
-        max-width: 85%;
-    }
-
 
 }
 
@@ -102,11 +191,6 @@
  * SCREEN: B/w 1025px to 1280px
  */
 @media (min-width: 1025px) and (max-width: 1280px) {
-    /* Container */
-    #app_container {
-        max-width: 85%;
-    }
-
 
 }
 
@@ -116,11 +200,6 @@
  * SCREEN: B/w 768px to 1024px
  */
 @media (min-width: 768px) and (max-width: 1024px) {
-    /* Container */
-    #app_container {
-        max-width: 100%;
-    }
-
 
 }
 
@@ -130,16 +209,6 @@
  * SCREEN: B/w 768px to 1024px
  */
 @media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
-    /* Outer Container */
-    #app_outer_container {
-        padding:15px;
-    }
-
-
-    /* Container */
-    #app_container {
-        max-width: 100%;
-    }
 
 
 }
@@ -150,17 +219,7 @@
  * SCREEN: B/w 481px to 767px
  */
 @media (min-width: 481px) and (max-width: 767px) {
-    /* Outer Container */
-    #app_outer_container {
-        padding:15px;
-    }
 
-
-    /* Container */
-    #app_container {
-        max-width: 100%;
-        flex-direction: column;
-    }
     
 
 }
@@ -171,19 +230,23 @@
  * SCREEN: 480px to lower resolution mobiles
  */
 @media (max-width: 480px) {
+    /* Body */
+    body { background-color: white; }
+
     /* Outer Container */
     #app_outer_container {
-        padding:15px;
+        padding:0;
     }
 
-
-    /* Container */
-    #app_container {
-        max-width: 100%;
-        flex-direction: column;
+    /* Calculator Container */
+    #calculator_container {
+        box-shadow: none;
+        border-radius: none;
+        padding:25px 15px 15px 15px;
     }
 
-
-
-
+    /* Controller Row */
+    #calculator_container #calculator_controller .row {
+        gap: 15px;
+    }
 }
