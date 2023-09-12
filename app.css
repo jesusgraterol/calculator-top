@@ -1,0 +1,189 @@
+/********************
+ * GLOBAL VARIABLES *
+ ********************/
+ :root {
+    --primary-color: #312e2e;
+}
+
+
+/*************
+ * SANITIZER *
+ *************/
+ *, *::before, *::after { box-sizing: border-box; border: none; background-repeat: no-repeat; }
+ html { font-family: Verdana, Geneva, Tahoma, sans-serif; word-break: break-word; color: #312e2e}
+ body { margin: 0; padding:0; background-color: #fafafa;width: 100%;height:100% }
+
+
+
+
+
+
+
+
+ /**********
+  * BUTTON *
+  **********/
+
+
+
+
+
+
+
+
+
+
+ /******************
+  * APP CONTAINERS *
+  ******************/
+
+
+/* Outer Container */
+#app_outer_container {
+    padding:30px;
+}
+
+
+
+/* Inner Container */
+#app_inner_container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+/* Container */
+#app_container {
+    max-width: 70%;
+    display: flex;
+    justify-content: center;
+    flex: 1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+ /****************************
+ * RESPONSIVE MEDIA QUERIES *
+ ****************************/
+
+
+/*
+ * DEVICE: Desktops
+ * SCREEN: 1281px to higher resolution desktops
+ */
+@media (min-width: 1281px) {
+    /* Container */
+    #app_container {
+        max-width: 85%;
+    }
+
+
+}
+
+
+/*
+ * DEVICE: Laptops, Desktops
+ * SCREEN: B/w 1025px to 1280px
+ */
+@media (min-width: 1025px) and (max-width: 1280px) {
+    /* Container */
+    #app_container {
+        max-width: 85%;
+    }
+
+
+}
+
+
+/*
+ * DEVICE: Tablets, Ipads (portrait)
+ * SCREEN: B/w 768px to 1024px
+ */
+@media (min-width: 768px) and (max-width: 1024px) {
+    /* Container */
+    #app_container {
+        max-width: 100%;
+    }
+
+
+}
+
+
+/*
+ * DEVICE: Tablets, Ipads (landscape)
+ * SCREEN: B/w 768px to 1024px
+ */
+@media (min-width: 768px) and (max-width: 1024px) and (orientation: landscape) {
+    /* Outer Container */
+    #app_outer_container {
+        padding:15px;
+    }
+
+
+    /* Container */
+    #app_container {
+        max-width: 100%;
+    }
+
+
+}
+
+
+/*
+ * DEVICE: Low Resolution Tablets, Mobiles (Landscape)
+ * SCREEN: B/w 481px to 767px
+ */
+@media (min-width: 481px) and (max-width: 767px) {
+    /* Outer Container */
+    #app_outer_container {
+        padding:15px;
+    }
+
+
+    /* Container */
+    #app_container {
+        max-width: 100%;
+        flex-direction: column;
+    }
+    
+
+}
+
+
+/*
+ * DEVICE: Most of the Smartphones Mobiles (Portrait)
+ * SCREEN: 480px to lower resolution mobiles
+ */
+@media (max-width: 480px) {
+    /* Outer Container */
+    #app_outer_container {
+        padding:15px;
+    }
+
+
+    /* Container */
+    #app_container {
+        max-width: 100%;
+        flex-direction: column;
+    }
+
+
+
+
+}
