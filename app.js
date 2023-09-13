@@ -14,7 +14,8 @@ class App {
     // Operation
     #operand_1 = "";
     #operand_2 = "";
-    #operator = ""; 
+    #operator = "";
+    #temp_result = "";
 
     // Error Toastr
     #error_toastr_el;
@@ -37,7 +38,10 @@ class App {
 
         // Initialize the error toastr and hide it on click
         this.#error_toastr_el = document.getElementById("error_toastr");
-        this.#error_toastr_el.addEventListener("click", () => this.#hide_error())
+        this.#error_toastr_el.addEventListener("click", () => this.#hide_error());
+
+        // Initialize the screen
+        this.#update_screen();
     }
 
 
@@ -45,35 +49,164 @@ class App {
 
 
 
+    /*****************
+     * INPUT HANDLER *
+     *****************/
 
+
+
+
+    /**
+     * Triggers whenever the app detects an input action. Can be invoked by clicking on the
+     * calculator's controller or by interacting with the Keyboard.
+     * @param key 
+     */
     #on_input(key) {
         try {
-            // Firstly, check if the value is a number
-            if (!isNaN(key.value)) {
-                //
-                if (this.#operand_1.length && this.#operator.length) {
-                    this.#operand_2 += key.value;
-                }
-                console.log(key.value);
+            // Handle numeric input
+            if (!isNaN(key.value)) { 
+                // Process the input
+                this.#on_numeric_input(key.value);
+
+                // Populate the temp result if possible
+                this.#temp_result = this.#execute_operation();
             }
+
+            // Handle a decimal input
+            else if (key.value == ".") { this.#on_decimal_input() }
+
+            // Handle an operator input
+            else if (
+                key.value == "÷" ||
+                key.value == "x" ||
+                key.value == "-" ||
+                key.value == "+"
+            ) { this.#on_operator_input(key.value) }
+
+            // Handle an operate action
+            else if (key.value == "=") { this.#on_operate_input() }
+
+            // Handle a clear action
+            else if (key.value == "clear") { this.#on_clear_input() }
+
+            // Handle a delete action
+            else if (key.value == "delete") { this.#on_delete_input() }
+
 
             // Finally, update the screen
             this.#update_screen();
-        } catch (e) { this.#display_error(e) }
+        } catch (e) { 
+            console.error(e);
+            this.#display_error(e);
+        }
     }
 
 
 
+    /* Handles the input of a numeric value and places it where it is meant to go */
     #on_numeric_input(value) {
+        if      (this.#operand_1.length && this.#operator.length) { this.#operand_2 += value } 
+        else if (!this.#operator.length) { this.#operand_1 += value }
+    }
 
+    /* Handles the input of a decimal (dot) */
+    #on_decimal_input() {
+        if (this.#operator.length && this.#operand_2.length && !this.#operand_2.includes(".")) {
+            this.#operand_2 += ".";
+        }  else if (
+            this.#operand_1.length && 
+            !this.#operand_2.length && 
+            !this.#operand_1.includes(".")
+        ) {
+            this.#operand_1 += ".";
+        } 
+    }
+
+    /* Handles the input of an operator */
+    #on_operator_input(value) {
+        if (this.#operand_1.length && !this.#operator.length) this.#operator = value;
+    }
+
+    /* Handles the input of the operate action */
+    #on_operate_input() {
+        // Only operate if all values have been set
+        if (this.#operand_1.length && this.#operator.length && this.#operand_2.length) {
+            // Perform the operation and set it as the new operand 1
+            this.#operand_1 = this.#execute_operation();
+
+            // Reset the operator and the second operand
+            this.#operator = "";
+            this.#operand_2 = "";
+        }
+    }
+
+    /* Handles the clear action */
+    #on_clear_input() {
+        this.#operand_1 = "";
+        this.#operand_2 = "";
+        this.#operator = "";
+        this.#temp_result = "";
+    }
+
+    /* Handles the delete action */
+    #on_delete_input() {
+        if (this.#operator.length && this.#operand_2.length) {
+            this.#operand_2 = this.#operand_2.slice(0, this.#operand_2.length - 1);
+        } else if (this.#operator.length && !this.#operand_2.length) {
+            this.#operator = "";
+        } else if (this.#operand_1.length && !this.#operator.length) {
+            this.#temp_result = "";
+            this.#operand_1 = this.#operand_1.slice(0, this.#operand_1.length - 1);
+        }
     }
 
 
 
 
+
+    /**
+     * Executes the operation if all values have been set. Otherwise, it returns an empty string.
+     * @returns string
+     */
+    #execute_operation() {
+        if (this.#operand_1.length && this.#operator.length && this.#operand_2.length) {
+            // Format the numeric values
+            const operand_1 = parseFloat(this.#operand_1);
+            const operand_2 = parseFloat(this.#operand_2);
+
+            // Init the result
+            let res;
+
+            // Handle the operation according to the operand
+            if      (this.#operator == "÷") { res = (operand_1 / operand_2).toFixed(2) }
+            else if (this.#operator == "x") { res = (operand_1 * operand_2).toFixed(2) }
+            else if (this.#operator == "-") { res = (operand_1 - operand_2).toFixed(2) }
+            else                           { res = (operand_1 + operand_2).toFixed(2) }
+
+            // Finally, return the result
+            return res;
+        } else { return "" }
+    }
+
+
+
+
+
+
+
+
+    /* Calculator Screen */
+
+
+
+
+
+    /**
+     * Updates the calculator's string after an input event.
+     */
     #update_screen() {
         this.#result_heading_el.innerText = this.#get_result_heading_text();
-        this.#result_el.innerText = "0";
+        this.#result_el.innerText = this.#get_result_text();
     }
 
 
@@ -95,8 +228,15 @@ class App {
 
 
 
+    /**
+     * Based on the current state of the calculator, it selects the value to be displayed in the
+     * result field.
+     * @returns string
+     */
     #get_result_text() {
-
+        if      (this.#temp_result.length)  { return this.#temp_result }
+        else if (this.#operand_1.length)    { return this.#operand_1 }
+        else                                { return "0" }
     }
 
 
@@ -192,10 +332,10 @@ class App {
      * @param code 
      * @returns {el: HTMLElement, codes: Array<string>, value: string}|undefined
      */
-    #get_controller_key(id_or_code) {
+    /*#get_controller_key(id_or_code) {
         return  this.#get_controller_key_by_code(id_or_code) || 
                 this.#get_controller_key_by_id(id_or_code);
-    }
+    }*/
 
 
     /**
