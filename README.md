@@ -4,8 +4,8 @@
 
 This application implements a basic calculator for arithmetic operations and it is the submission for [The Odin Project: Calculator](https://www.theodinproject.com/lessons/foundations-calculator). The key features are:
 
-- Perform Basic Arithmetic Operations
-- Keyboard Support
+- Basic Arithmetic Operations
+- Two-Decimal Precision
 - Cross-Platform Compatibility
 
 
